@@ -1,0 +1,65 @@
+{
+  "Index": {
+    "login": "Log In",
+    "getStarted": "Get Started",
+    "badge": "Now accepting expert applications",
+    "titlePart1": "Stop guessing,",
+    "titlePart2": "start talking.",
+    "subtitle": "Connect instantly with vetted industry veterans and PhD researchers. Get the 1-on-1 mentorship you need to break through your blockers.",
+    "ctaLearner": "Find a Mentor",
+    "ctaExpert": "Apply as an Expert",
+    "trustStat1": "500+ Vetted Experts",
+    "trustStat2": "4.9★ Average Rating",
+    "trustStat3": "$0 Until Session Ends",
+    "featuresTitle": "Everything you need to level up",
+    "feature1Title": "Live 1-on-1 Sessions",
+    "feature1Desc": "Real-time video and chat sessions with world-class mentors. No pre-recorded content.",
+    "feature2Title": "Escrow Payments",
+    "feature2Desc": "Your payment is held safely until your session is complete. Zero risk, full accountability.",
+    "feature3Title": "AI Matching",
+    "feature3Desc": "Our concierge AI understands your goals and matches you to the exact expert you need."
+  },
+  "Nav": {
+    "dashboard": "Dashboard",
+    "experts": "Experts",
+    "sessions": "Sessions",
+    "messages": "Messages",
+    "login": "Log In",
+    "signup": "Sign Up"
+  },
+  "Auth": {
+    "registerTitle": "Join MANTIS",
+    "registerSubtitle": "Start your mentorship journey today",
+    "loginTitle": "Welcome back",
+    "loginSubtitle": "Sign in to your MANTIS account",
+    "nameLabel": "Full Name",
+    "emailLabel": "Email Address",
+    "passwordLabel": "Password",
+    "roleLabel": "I want to...",
+    "learnerRole": "Find a Mentor (Learner)",
+    "expertRole": "Become a Mentor (Expert)",
+    "registerButton": "Create Account",
+    "loginButton": "Sign In",
+    "googleButton": "Continue with Google",
+    "haveAccount": "Already have an account?",
+    "noAccount": "Don't have an account?",
+    "signIn": "Sign in",
+    "signUp": "Sign up"
+  },
+  "Dashboard": {
+    "title": "Your Dashboard",
+    "subtitle": "Find the perfect mentor for your next breakthrough",
+    "searchPlaceholder": "Search experts by skill, name, or topic...",
+    "featuredExperts": "Featured Experts",
+    "viewProfile": "View Profile",
+    "bookSession": "Book Session",
+    "perHour": "/hr",
+    "noExperts": "No experts found. Try a different search.",
+    "stats": {
+      "sessions": "Sessions",
+      "hours": "Hours Learned",
+      "experts": "Experts Available",
+      "rating": "Avg. Rating"
+    }
+  }
+}

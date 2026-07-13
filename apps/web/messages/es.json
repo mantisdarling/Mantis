@@ -1,0 +1,65 @@
+{
+  "Index": {
+    "login": "Iniciar sesión",
+    "getStarted": "Comenzar",
+    "badge": "Ahora aceptando solicitudes de expertos",
+    "titlePart1": "Deja de adivinar,",
+    "titlePart2": "empieza a hablar.",
+    "subtitle": "Conéctate instantáneamente con veteranos de la industria y doctores. Obtén la mentoría personalizada que necesitas para superar tus obstáculos.",
+    "ctaLearner": "Encontrar un mentor",
+    "ctaExpert": "Aplicar como experto",
+    "trustStat1": "500+ Expertos verificados",
+    "trustStat2": "4.9★ Calificación promedio",
+    "trustStat3": "$0 Hasta que termine tu sesión",
+    "featuresTitle": "Todo lo que necesitas para mejorar",
+    "feature1Title": "Sesiones en vivo 1-a-1",
+    "feature1Desc": "Sesiones de video y chat en tiempo real con mentores de clase mundial.",
+    "feature2Title": "Pagos en custodia",
+    "feature2Desc": "Tu pago se retiene de forma segura hasta que se complete tu sesión.",
+    "feature3Title": "Coincidencia con IA",
+    "feature3Desc": "Nuestra IA entiende tus metas y te conecta con el experto exacto que necesitas."
+  },
+  "Nav": {
+    "dashboard": "Panel",
+    "experts": "Expertos",
+    "sessions": "Sesiones",
+    "messages": "Mensajes",
+    "login": "Iniciar sesión",
+    "signup": "Registrarse"
+  },
+  "Auth": {
+    "registerTitle": "Únete a MANTIS",
+    "registerSubtitle": "Comienza tu viaje de mentoría hoy",
+    "loginTitle": "Bienvenido de vuelta",
+    "loginSubtitle": "Inicia sesión en tu cuenta de MANTIS",
+    "nameLabel": "Nombre completo",
+    "emailLabel": "Correo electrónico",
+    "passwordLabel": "Contraseña",
+    "roleLabel": "Quiero...",
+    "learnerRole": "Encontrar un mentor (Aprendiz)",
+    "expertRole": "Ser mentor (Experto)",
+    "registerButton": "Crear cuenta",
+    "loginButton": "Iniciar sesión",
+    "googleButton": "Continuar con Google",
+    "haveAccount": "¿Ya tienes cuenta?",
+    "noAccount": "¿No tienes cuenta?",
+    "signIn": "Inicia sesión",
+    "signUp": "Regístrate"
+  },
+  "Dashboard": {
+    "title": "Tu Panel",
+    "subtitle": "Encuentra al mentor perfecto para tu próximo avance",
+    "searchPlaceholder": "Buscar expertos por habilidad, nombre o tema...",
+    "featuredExperts": "Expertos destacados",
+    "viewProfile": "Ver perfil",
+    "bookSession": "Reservar sesión",
+    "perHour": "/hr",
+    "noExperts": "No se encontraron expertos. Intenta una búsqueda diferente.",
+    "stats": {
+      "sessions": "Sesiones",
+      "hours": "Horas aprendidas",
+      "experts": "Expertos disponibles",
+      "rating": "Calificación"
+    }
+  }
+}

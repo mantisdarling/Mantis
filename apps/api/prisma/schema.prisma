@@ -1,0 +1,202 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+model User {
+  id                 String    @id @default(uuid()) @db.Uuid
+  name               String
+  email              String    @unique
+  passwordHash       String?
+  role               Role      @default(LEARNER)
+  timezone           String?
+  createdAt          DateTime  @default(now())
+  twoFactorSecret    String?
+  isTwoFactorEnabled Boolean   @default(false)
+
+  profile            Profile?
+  slots              BookingSlot[]
+  sessionsAsLearner  Session[]         @relation("LearnerSessions")
+  sessionsAsExpert   Session[]         @relation("ExpertSessions")
+  apiKeys            ApiKey[]
+  messages           Message[]
+  paymentsSent       Payment[]         @relation("PayerPayments")
+  paymentsReceived   Payment[]         @relation("PayeePayments")
+  reviewsGiven       Review[]          @relation("LearnerReviews")
+  reviewsReceived    Review[]          @relation("ExpertReviews")
+  webhooks           WebhookEndpoint[]
+  accounts           Account[]
+}
+
+enum Role {
+  LEARNER
+  EXPERT
+  ADMIN
+}
+
+model Profile {
+  id              String   @id @default(uuid()) @db.Uuid
+  userId          String   @unique @db.Uuid
+  user            User     @relation(fields: [userId], references: [id])
+  bio             String?  @db.Text
+  headline        String?
+  avatarUrl       String?
+  skills          String[]
+  hourlyRate      Float?
+  rating          Float?
+  isVerified      Boolean  @default(false)
+  stripeAccountId String?
+}
+
+model BookingSlot {
+  id              String   @id @default(uuid()) @db.Uuid
+  expertId        String   @db.Uuid
+  expert          User     @relation(fields: [expertId], references: [id])
+  startDatetime   DateTime
+  durationMinutes Int      @default(60)
+  isReserved      Boolean  @default(false)
+  learnerId       String?  @db.Uuid
+}
+
+model Session {
+  id           String        @id @default(uuid()) @db.Uuid
+  learnerId    String        @db.Uuid
+  learner      User          @relation("LearnerSessions", fields: [learnerId], references: [id])
+  expertId     String        @db.Uuid
+  expert       User          @relation("ExpertSessions", fields: [expertId], references: [id])
+  status       SessionStatus @default(SCHEDULED)
+  startTime    DateTime?
+  endTime      DateTime?
+  learnerRating Float?
+  expertRating  Float?
+  messages     Message[]
+  transcript   Transcript?
+  review       Review?
+  createdAt    DateTime      @default(now())
+}
+
+enum SessionStatus {
+  SCHEDULED
+  ACTIVE
+  COMPLETED
+  CANCELED
+}
+
+model Message {
+  id        String   @id @default(uuid()) @db.Uuid
+  sessionId String   @db.Uuid
+  session   Session  @relation(fields: [sessionId], references: [id])
+  senderId  String   @db.Uuid
+  sender    User     @relation(fields: [senderId], references: [id])
+  content   String   @db.Text
+  createdAt DateTime @default(now())
+}
+
+model Transcript {
+  id        String   @id @default(uuid()) @db.Uuid
+  sessionId String   @unique @db.Uuid
+  session   Session  @relation(fields: [sessionId], references: [id])
+  rawText   String?  @db.Text
+  aiSummary String?  @db.Text
+}
+
+model Payment {
+  id         String        @id @default(uuid()) @db.Uuid
+  payerId    String        @db.Uuid
+  payer      User          @relation("PayerPayments", fields: [payerId], references: [id])
+  payeeId    String        @db.Uuid
+  payee      User          @relation("PayeePayments", fields: [payeeId], references: [id])
+  amount     Decimal
+  status     PaymentStatus @default(PENDING)
+  stripePiId String?
+}
+
+enum PaymentStatus {
+  PENDING
+  ESCROW
+  COMPLETED
+  REFUNDED
+}
+
+model Review {
+  id        String   @id @default(uuid()) @db.Uuid
+  sessionId String   @unique @db.Uuid
+  session   Session  @relation(fields: [sessionId], references: [id])
+  learnerId String   @db.Uuid
+  learner   User     @relation("LearnerReviews", fields: [learnerId], references: [id])
+  expertId  String   @db.Uuid
+  expert    User     @relation("ExpertReviews", fields: [expertId], references: [id])
+  rating    Int
+  comment   String?  @db.Text
+  createdAt DateTime @default(now())
+}
+
+model Account {
+  id                String  @id @default(uuid()) @db.Uuid
+  userId            String  @db.Uuid
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model WebhookEndpoint {
+  id        String   @id @default(uuid()) @db.Uuid
+  userId    String   @db.Uuid
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  url       String
+  secret    String
+  events    String[]
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model FeatureFlag {
+  id          String   @id @default(uuid()) @db.Uuid
+  key         String   @unique
+  description String?  @db.Text
+  isEnabled   Boolean  @default(false)
+  percentage  Int?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model ApiKey {
+  id         String    @id @default(uuid())
+  name       String
+  keyHash    String    @unique
+  prefix     String
+  userId     String    @db.Uuid
+  user       User      @relation(fields: [userId], references: [id])
+  lastUsedAt DateTime?
+  expiresAt  DateTime?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+}
+
+model AuditLog {
+  id         String   @id @default(uuid()) @db.Uuid
+  action     String
+  endpoint   String
+  userId     String?  @db.Uuid
+  ipAddress  String
+  userAgent  String
+  statusCode Int
+  details    String?  @db.Text
+  createdAt  DateTime @default(now())
+}

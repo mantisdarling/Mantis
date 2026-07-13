@@ -1,0 +1,16 @@
+{
+  "name": "MANTIS — Mentorship Marketplace",
+  "short_name": "MANTIS",
+  "description": "Stop guessing, start talking. Connect with vetted expert mentors.",
+  "theme_color": "#6366f1",
+  "background_color": "#09090b",
+  "display": "standalone",
+  "orientation": "portrait",
+  "start_url": "/",
+  "scope": "/",
+  "icons": [
+    { "src": "/icon-192x192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable any" },
+    { "src": "/icon-512x512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable any" }
+  ],
+  "categories": ["education", "business"]
+}

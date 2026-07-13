@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package mantis;
+
+service MantisService {
+  rpc GetUser (UserRequest) returns (UserResponse);
+  rpc MatchExpert (MatchRequest) returns (MatchResponse);
+}
+
+message UserRequest {
+  string id = 1;
+}
+
+message UserResponse {
+  string id = 1;
+  string name = 2;
+  string email = 3;
+  string role = 4;
+}
+
+message MatchRequest {
+  string learner_id = 1;
+  repeated string skills = 2;
+}
+
+message MatchResponse {
+  repeated string expert_ids = 1;
+}

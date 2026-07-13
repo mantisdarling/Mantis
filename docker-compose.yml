@@ -1,0 +1,85 @@
+version: '3.9'
+
+services:
+  # ── PostgreSQL 15 ──────────────────────────────────────────
+  postgres:
+    image: postgres:15-alpine
+    container_name: mantis_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: mantis
+      POSTGRES_PASSWORD: mantis_dev_password
+      POSTGRES_DB: mantis
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U mantis']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ── Redis 7 ───────────────────────────────────────────────
+  redis:
+    image: redis:7-alpine
+    container_name: mantis_redis
+    restart: unless-stopped
+    ports:
+      - '6379:6379'
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ── NestJS API ────────────────────────────────────────────
+  api:
+    build:
+      context: ./apps/api
+      dockerfile: Dockerfile
+    container_name: mantis_api
+    restart: unless-stopped
+    ports:
+      - '3001:3001'
+    environment:
+      NODE_ENV: development
+      PORT: 3001
+      DATABASE_URL: postgresql://mantis:mantis_dev_password@postgres:5432/mantis
+      REDIS_URL: redis://redis:6379
+      REDIS_HOST: redis
+      JWT_SECRET: dev-secret-please-change-in-production-min-32-chars
+      FRONTEND_URL: http://localhost:3000
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./apps/api:/app
+      - /app/node_modules
+
+  # ── Next.js Web ───────────────────────────────────────────
+  web:
+    build:
+      context: ./apps/web
+      dockerfile: Dockerfile
+    container_name: mantis_web
+    restart: unless-stopped
+    ports:
+      - '3000:3000'
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:3001
+      JWT_SECRET: dev-secret-please-change-in-production-min-32-chars
+    depends_on:
+      - api
+    volumes:
+      - ./apps/web:/app
+      - /app/node_modules
+      - /app/.next
+
+volumes:
+  postgres_data:
+  redis_data:

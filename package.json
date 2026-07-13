@@ -1,0 +1,29 @@
+{
+  "name": "mantis",
+  "version": "2.0.0",
+  "private": true,
+  "description": "MANTIS Mentorship Marketplace — Stop guessing, start talking.",
+  "author": "harshitzmishraa@gmail.com",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "build:render": "npm install --include=dev && cd apps/api && npx prisma generate && cd ../.. && npx turbo run build --filter=api",
+    "start:render": "cd apps/api && node $(find dist -name 'main.js' | head -n 1)",
+    "clean": "turbo run clean && rm -rf node_modules"
+  },
+  "devDependencies": {
+    "turbo": "^2.0.0",
+    "prettier": "^3.1.1"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=10.0.0"
+  },
+  "packageManager": "npm@10.0.0"
+}

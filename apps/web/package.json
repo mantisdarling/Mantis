@@ -1,0 +1,30 @@
+{
+  "name": "@mantis/web",
+  "version": "2.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@serwist/next": "^9.0.0",
+    "@stripe/react-stripe-js": "^2.0.0",
+    "@stripe/stripe-js": "^3.0.0",
+    "jose": "^5.0.0",
+    "next": "^15.3.0",
+    "next-intl": "^3.26.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "recharts": "^2.15.0",
+    "serwist": "^9.0.0"
+  },
+  "devDependencies": {
+    "@axe-core/react": "^4.10.0",
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "typescript": "^5.3.3"
+  }
+}
